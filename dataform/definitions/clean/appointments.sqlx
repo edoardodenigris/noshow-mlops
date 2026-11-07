@@ -1,0 +1,34 @@
+config {
+  type: "table",
+  description: "Appuntamenti puliti: tipi corretti, nomi chiari, righe incoerenti escluse."
+}
+
+SELECT
+  -- ID: sempre come testo
+  CAST(CAST(PatientId AS INT64) AS STRING)      AS patient_id,
+  CAST(AppointmentID AS STRING)                 AS appointment_id,
+
+  Gender                                        AS gender,
+  Neighbourhood                                 AS neighbourhood,
+  Age                                           AS age,
+
+  -- date: la prenotazione ha un orario vero, l'appuntamento no
+  ScheduledDay                                  AS scheduled_at,
+  DATE(AppointmentDay)                          AS appointment_date,
+  DATE_DIFF(DATE(AppointmentDay), DATE(ScheduledDay), DAY) AS lead_time_days,
+
+  -- flag 0/1 -> vero/falso
+  Scholarship = 1                               AS has_scholarship,
+  Hipertension = 1                              AS has_hypertension,
+  Diabetes = 1                                  AS has_diabetes,
+  Alcoholism = 1                                AS has_alcoholism,
+  Handcap                                       AS handicap_level,
+  SMS_received = 1                              AS sms_received,
+
+  -- target: true = il paziente NON si è presentato
+  `No-show`                                     AS is_no_show
+
+FROM ${ref("noshow_raw", "appointments")}
+
+WHERE Age >= 0                                        -- elimina età impossibili
+  AND DATE(AppointmentDay) >= DATE(ScheduledDay)      -- elimina lead time negativi

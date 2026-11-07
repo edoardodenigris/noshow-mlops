@@ -1,0 +1,7 @@
+config {
+  type: "declaration",
+  database: "noshow-mlops",
+  schema: "noshow_raw",
+  name: "appointments",
+  description: "Dati Kaggle originali, caricati da GCS. Non modificare."
+}
