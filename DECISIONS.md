@@ -15,6 +15,8 @@
 | 2026-11-07 | SMS_received mantenuto nella tabella clean | Pulire ≠ scegliere le feature; si decide dopo l'analisi del leakage | Escluderlo subito |
 | 2026-11-07 | Credenziali Dataform via ADC, file in `.gitignore` | Nessuna chiave da gestire, repo pubblico | Chiave JSON di service account |
 | 2026-11-07 | Push con token GitHub classico (scope `repo`, 90 gg) | Nel token fine-grained non era disponibile il permesso Contents | Token fine-grained limitato al repo |
+| 2026-11-25 | `sms_received` escluso dalle feature del modello | SMS solo con lead time ≥ 3 gg (0% sotto); effetto grezzo +11 pt no-show, ma a parità di lead time -3/-7 pt (paradosso di Simpson). Non noto al momento dello score; è un'azione, non una caratteristica | Usarlo come feature |
+| 2026-11-25 | Assertions Dataform sulla tabella clean: `appointment_id` univoco, chiavi non nulle, `age >= 0`, `lead_time_days >= 0` | Il WHERE fa la pulizia, l'assertion garantisce che resti fatta; blocca dati rotti prima del modello | Controlli manuali dei conteggi |
 ```
 
 

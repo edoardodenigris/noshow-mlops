@@ -1,6 +1,14 @@
 config {
   type: "table",
-  description: "Appuntamenti puliti: tipi corretti, nomi chiari, righe incoerenti escluse."
+  description: "Appuntamenti puliti: tipi corretti, nomi chiari, righe incoerenti escluse.",
+  assertions: {
+    uniqueKey: ["appointment_id"],
+    nonNull: ["appointment_id", "patient_id", "appointment_date", "is_no_show"],
+    rowConditions: [
+      "age >= 0",
+      "lead_time_days >= 0"
+    ]
+  }
 }
 
 SELECT
